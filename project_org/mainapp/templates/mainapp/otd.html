@@ -1,0 +1,49 @@
+{% extends 'mainapp/layout.html' %}
+
+{% block title %}
+Отделы организации
+{% endblock %}
+{% block content %}
+<div class="features">
+    <h1>Отделы организации</h1>
+    {% if spisok_otdelov %}
+    <table>
+        <tr>
+            <th><a href="{% url 'otd' %}?q=number">Номер отдела</a></th>
+            <th><a href="{% url 'otd' %}?q=name">Название</a></th>
+            <th><a href="{% url 'otd' %}">Сотрудники отдела</a></th>
+            <th><a href="{% url 'otd' %}">Оборудование отдела</a></th>
+            <th><a href="{% url 'otd' %}">№ Договора за отделом</a></th>
+        </tr>
+        {% for el in spisok_otdelov %}
+            <tr>
+                <td style="text-align: center;">{{ el.number }}</td>
+                <td>{{ el.name }}</td>
+                <td>
+                   {% for el_proj in el.sotrudniki_set.all %}
+                        {{ el_proj.last_name }} {{ el_proj.first_name }} {{ el_proj.otchestvo }};
+                   {% endfor %}
+                </td>
+                <td>
+                   {% for el_proj in el.machine_set.all %}
+                        {{ el_proj.name }};
+                   {% endfor %}
+                </td>
+                <td style="text-align: center;">
+                   {% for el_proj in el.dogovor_set.all %}
+                        {{ el_proj.number }};
+                   {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+        <p>Нет доступных записей</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+

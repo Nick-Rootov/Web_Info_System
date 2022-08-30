@@ -1,0 +1,35 @@
+{% extends 'mainapp/layout.html' %}
+
+{% block title %}
+Оборудование организации
+{% endblock %}
+{% block content %}
+<div class="features">
+    <h1>Оборудование организации</h1>
+    {% if spisok_machines %}
+    <table>
+        <tr>
+            <th><a href="{% url 'mach' %}?q=id">ID</a></th>
+            <th><a href="{% url 'mach' %}?q=name">Название</a></th>
+            <th><a href="{% url 'mach' %}?q=opis">Описание</a></th>
+            <th><a href="{% url 'mach' %}?q=n_otdela">Ответственный отдел</a></th>
+        </tr>
+        {% for el in spisok_machines %}
+            <tr>
+                <td style="text-align: center;">{{ el.id }}</td>
+                <td>{{ el.name }}</td>
+                <td style="width:300px; word-break: break-word;">{{ el.opis }}</td>
+                <td>{{ el.n_otdela }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+        <p>Нет доступных записей</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+

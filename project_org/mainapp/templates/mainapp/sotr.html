@@ -1,0 +1,46 @@
+{% extends 'mainapp/layout.html' %}
+
+{% block title %}
+Сотрудники организации
+{% endblock %}
+{% block content %}
+<div class="features">
+    <h1>Сотрудники организации{{tester}}</h1>
+    {% if spisok_sotrudnikov %}
+    <table>
+        <tr>
+            <th><a href="{% url 'sotr' %}?q=id">ID</a></th>
+            <th><a href="{% url 'sotr' %}?q=last_name">Фамилия</a></th>
+            <th><a href="{% url 'sotr' %}?q=first_name">Имя</a></th>
+            <th><a href="{% url 'sotr' %}?q=otchestvo">Отчество</a></th>
+            <th><a href="{% url 'sotr' %}?q=zarplata">Зарплата</a></th>
+            <th><a href="{% url 'sotr' %}?q=cat">Категория</a></th>
+            <th><a href="{% url 'sotr' %}?q=n_otdela">Номер отдела</a></th>
+            <th><a href="{% url 'sotr' %}?q=ruk">Руководитель</a></th>
+        </tr>
+        {% for el in spisok_sotrudnikov %}
+            <tr>
+                <td style="text-align: center;">{{ el.id }}</td>
+                <td>{{ el.last_name }}</td>
+                <td>{{ el.first_name }}</td>
+                <td>{{ el.otchestvo }}</td>
+                <td style="text-align: center;">{{ el.zarplata }}</td>
+                <td>{{ el.cat }}</td>
+                <td>{{ el.n_otdela }}</td>
+                <td>    {% if el.ruk %}
+                        Да
+                        {% else %}
+                        --
+                        {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>Нет доступных записей</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+

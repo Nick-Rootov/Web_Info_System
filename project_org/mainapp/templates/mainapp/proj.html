@@ -1,0 +1,40 @@
+{% extends 'mainapp/layout.html' %}
+
+{% block title %}
+Проекты организации
+{% endblock %}
+{% block content %}
+<div class="features">
+    <h1>Проекты организации</h1>
+    {% if spisok_projects %}
+    <table>
+        <tr>
+            <th><a href="{% url 'proj' %}?q=id">ID</a></th>
+            <th><a href="{% url 'proj' %}?q=name">Название проекта</a></th>
+            <th><a href="{% url 'proj' %}?q=opis">Описание проекта</a></th>
+            <th><a href="{% url 'proj' %}">Номер договора</a></th>
+            <th><a href="{% url 'proj' %}?q=price">Стоимость проекта</a></th>
+        </tr>
+        {% for el in spisok_projects %}
+            <tr>
+                <td style="text-align: center;">{{ el.id }}</td>
+                <td>{{ el.name }}</td>
+                <td style="width:300px; word-break: break-word;">{{ el.opis }}</td>
+                <td style="text-align: center;">{% for el_dogov in el.dogovori.all %}
+                        {{ el_dogov.number }};
+                    {% endfor %}
+                </td>
+                <td style="text-align: center;">{{ el.price }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+        <p>Нет доступных записей</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+
